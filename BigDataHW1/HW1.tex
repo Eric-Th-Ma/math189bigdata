@@ -1,0 +1,295 @@
+\documentclass[12pt,letterpaper]{hmcpset}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+\input{macros.tex}
+
+% info for header block in upper right hand corner
+\name{Eric Thompson-Martin}
+\class{Math189R SP19}
+\assignment{Homework 1}
+\duedate{Monday, Feb 4, 2017}
+
+\renewcommand{\labelenumi}{{(\alph{enumi})}}
+
+
+\begin{document}
+Feel free to work with other students, but make sure you write up the homework
+and code on your own (no copying homework \textit{or} code; no pair programming).
+Feel free to ask students or instructors for help debugging code or whatever else,
+though.
+The starter code for problem 2 part c and d can be found under the Resource tab on course website.\\
+
+\textit{Note:} You need to create a Github account for submission of the coding part of the homework. Please create a repository on Github to hold all your code and include your Github account username as part of the answer to problem 2.
+
+\begin{problem}[1]
+(\textbf{Linear Transformation}) Let $\mathbf{y} = A\mathbf{x} + \mathbf{b}$ be a random vector.
+show that expectation is linear:
+\[
+    \EE[\yy] = \EE[A\xx + \bb] = A\EE[\xx] + \bb.
+\]
+Also show that
+\[
+    \cov[\yy] = \cov[A\xx + \bb] = A \cov[\xx] A^\T = A\Sigmab A^\T.
+\]
+\end{problem}
+\begin{solution}
+    \hspace{6mm} Since $\mathbf{y} = A\mathbf{x} + \mathbf{b}$ we know $\EE[\yy] = \EE[A\xx + \bb]$. Where:
+\[
+    A = \begin{bmatrix}
+    a_{11} & a_{12} & ... & a_{1n}  \\%[5pt]
+    a_{21} & a_{22} & ... & a_{2n} \\%[5pt]
+    .      &   .    &  .  &  .\\[-10pt]
+    .      &   .    &  .  &  .   \\[-10pt]
+    .      &   .    &  .  &  .   \\[5pt]
+    a_{n1} & a_{n2} & ... & a_{nn}
+    \end{bmatrix},
+    \hspace{6mm}
+    \xx = \begin{bmatrix}
+    x_{1}\\%[5pt]
+    x_{2}\\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    x_{n}
+    \end{bmatrix},
+    \hspace{6mm}
+    \bb = \begin{bmatrix}
+    b_{1}\\%[5pt]
+    b_{2}\\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    b_{n}
+    \end{bmatrix}
+\]
+And all the terms $a_{ij},\  b_{i}$ are constants, and all the terms $x_i$ are random variables. Now let's write A as a column of row vectors like so:
+\[
+    \aa_1 = \begin{bmatrix}
+        a_{11} & a_{12} & ... & a_{1n}
+    \end{bmatrix},
+    \aa_2 = \begin{bmatrix}
+        a_{21} & a_{22} & ... & a_{2n}
+    \end{bmatrix},
+    \ 
+    ...
+    \ 
+    \aa_n = \begin{bmatrix}
+        a_{n1} & a_{n2} & ... & a_{nn}
+    \end{bmatrix}
+\]
+Now we see $A = \begin{bmatrix}
+    \aa_{1}\\%[5pt]
+    \aa_{2}\\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    \aa_{n}
+    \end{bmatrix}$, and therefore $\mathbf{y} = A\mathbf{x} + \mathbf{b} = \begin{bmatrix}
+    \aa_{1}\xx\\%[5pt]
+    \aa_{2}\xx\\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    \aa_{n}\xx
+    \end{bmatrix} + 
+    \begin{bmatrix}
+    b_{1}\\%[5pt]
+    b_{2}\\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    b_{n}
+    \end{bmatrix} = 
+    \begin{bmatrix}
+    \aa_{1}\xx+b_{1}\\%[5pt]
+    \aa_{2}\xx+b_{2}\\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    \aa_{n}\xx+b_{n}
+    \end{bmatrix}$. This means $\EE (\yy) = 
+    \begin{bmatrix}
+    \EE (\aa_{1}\xx+b_{1}) \\%[5pt]
+    \EE (\aa_{2}\xx+b_{2}) \\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    \EE (\aa_{n}\xx+b_{n})
+    \end{bmatrix}$. By the definition of expectation one of these terms \newline
+    $\EE (\aa_{i}\xx+b_{i}) = \sum_{\omega}((a_{i1}x_1(\omega) + a_{i2}x_2(\omega) + ... + a_{in}x_n(\omega) + b_i)(Pr(\omega))=$ \newline $\sum_{\omega}(a_{i1}x_1(\omega)Pr(\omega)) + \sum_{\omega}(a_{i2}x_2(\omega)Pr(\omega)) + ... + \sum_{\omega}(a_{in}x_n(\omega)Pr(\omega)) + \sum_{\omega}(b_iPr(\omega))=$ \newline 
+    $a_{i1}\sum_{\omega}(x_1(\omega)Pr(\omega)) + a_{i2}\sum_{\omega}(x_2(\omega)Pr(\omega)) + ... + a_{in}\sum_{\omega}(x_n(\omega)Pr(\omega)) + b_i = $\newline
+    $a_{i1}\EE (x_1) + a_{i2}\EE (x_2) + ... + a_{in}\EE (x_n)) + b_i = \aa_{i}\EE (\xx)+b_{i}$
+    Now we have that $\EE (\yy) = 
+    \begin{bmatrix}
+    \aa_{1}\EE (\xx)+b_{1} \\%[5pt]
+    \aa_{2}\EE (\xx)+b_{2} \\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    \aa_{n}\EE (\xx)+b_{n}
+    \end{bmatrix} = \begin{bmatrix}
+    \aa_{1}\EE (\xx) \\%[5pt]
+    \aa_{2}\EE (\xx) \\%[5pt]
+    . \\[-10pt]
+    . \\[-10pt]
+    . \\[5pt]
+    \aa_{n}\EE (\xx)
+    \end{bmatrix} + \bb = A\EE[\xx] + \bb$.
+\end{solution}
+\begin{solution}
+    \hspace{6mm} By definition 
+    $\cov[\yy] = \EE((\yy-\EE(\yy))(\yy-\EE(\yy))^T)$ substituting $\yy = A\xx + \bb$ we get \newline
+    $\EE((A\xx + \bb-\EE(A\xx + \bb))(A\xx + \bb-\EE(A\xx + \bb))^T) =$ \newline
+    $ \EE((A\xx + \bb - A\EE(\xx) - \bb)(A\xx + \bb - A\EE(\xx) - \bb)^T) = $ \newline
+    $ \EE((A\xx - A\EE(\xx))(A\xx - A\EE(\xx))^T) = $\newline
+    $ \EE((A(\xx - \EE(\xx)))(A(\xx - \EE(\xx)))^T)$ Using that $(AB)^T = B^TA^T$ we get \newline
+    $ \EE(A(\xx - \EE(\xx))(\xx - \EE(\xx))^TA^T) = $ \newline
+    $ A\EE((\xx - \EE(\xx))(\xx - \EE(\xx))^T)A^T$ Recognize that $\EE((\xx - \EE(\xx))(\xx - \EE(\xx))^T) = \cov[\xx]$, so we have that this is equivalent to 
+    $A\cov[\xx]A^T = A\Sigmab A^T$
+\end{solution}
+\newpage
+
+
+
+
+\begin{problem}[2]
+Given the dataset $\Dc = \{(x,y)\} = \{(0,1), (2,3), (3,6), (4,8)\}$
+\begin{enumerate}
+   \item Find the least squares estimate $y = \thetab^\T\xx$ by hand using
+        Cramer's Rule.
+    \item Use the normal equations to find the same solution and verify it
+        is the same as part (a).
+    \item Plot the data and the optimal linear fit you found.
+    \item Find randomly generate 100 points near the line with white Gaussian
+        noise and then compute the least squares estimate (using a computer).
+        Verify that this new line is close to the original and plot the new
+        dataset, the old line, and the new line.
+\end{enumerate}
+
+\end{problem}
+\begin{solution}
+    \begin{enumerate}
+        \item First, we see $y = \begin{bmatrix}
+        1\\
+        3\\
+        6\\
+        8\\
+        \end{bmatrix}$, and $\xx = \begin{bmatrix}
+        \xx_0 & \xx_1
+        \end{bmatrix} = \begin{bmatrix}
+        1 & 0\\
+        1 & 2\\
+        1 & 3\\
+        1 & 4\\
+        \end{bmatrix}$. We know $\xx^{T}\xx\theta = \xx^{T}y$ and
+        $\xx^{T}\xx = \begin{bmatrix}
+        1 & 1 & 1 & 1\\
+        0 & 2 & 3 & 4
+        \end{bmatrix}\begin{bmatrix}
+        1 & 0\\
+        1 & 2\\
+        1 & 3\\
+        1 & 4
+        \end{bmatrix} = \begin{bmatrix}
+        4 & 9 \\
+        9 & 29
+        \end{bmatrix}$ and $\xx^{T}y = \begin{bmatrix}
+        1 & 1 & 1 & 1\\
+        0 & 2 & 3 & 4
+        \end{bmatrix}\begin{bmatrix}
+        1\\
+        3\\
+        6\\
+        8
+        \end{bmatrix} = \begin{bmatrix}
+        18\\
+        56
+        \end{bmatrix}$, so we have $\begin{bmatrix}
+        4 & 9 \\
+        9 & 29
+        \end{bmatrix}\begin{bmatrix}
+        \theta_0\\
+        \theta_1
+        \end{bmatrix} = \begin{bmatrix}
+        18\\
+        56
+        \end{bmatrix}$. By Cramer's rule $\theta_0 = \frac{\begin{vmatrix}
+        18 & 9 \\
+        56 & 29
+        \end{vmatrix}}{\begin{vmatrix}
+        4 & 9 \\
+        9 & 29
+        \end{vmatrix}} = \frac{522-504}{116-81} = 18/35$ and $\theta_1 = \frac{\begin{vmatrix}
+        4 & 18 \\
+        9 & 56
+        \end{vmatrix}}{\begin{vmatrix}
+        4 & 9 \\
+        9 & 29
+        \end{vmatrix}} = \frac{224-162}{116-81} = 62/35$
+
+
+        \item $\theta = (\xx^{T}\xx)^{-1}\xx^{T}y = (\begin{bmatrix}
+        1 & 1 & 1 & 1\\
+        0 & 2 & 3 & 4
+        \end{bmatrix}\begin{bmatrix}
+        1 & 0\\
+        1 & 2\\
+        1 & 3\\
+        1 & 4\\
+        \end{bmatrix})^{-1}\begin{bmatrix}
+        1 & 1 & 1 & 1\\
+        0 & 2 & 3 & 4
+        \end{bmatrix}\begin{bmatrix}
+        1\\
+        3\\
+        6\\
+        8\\
+        \end{bmatrix} =$\newline
+        $(\begin{bmatrix}
+        4 & 9 \\
+        9 & 29
+        \end{bmatrix})^{-1}\begin{bmatrix}
+        1 & 1 & 1 & 1\\
+        0 & 2 & 3 & 4
+        \end{bmatrix}\begin{bmatrix}
+        1\\
+        3\\
+        6\\
+        8\\
+        \end{bmatrix} = \frac{1}{35}\begin{bmatrix}
+        29 & -9 \\
+        -9 & 4
+        \end{bmatrix}\begin{bmatrix}
+        1 & 1 & 1 & 1\\
+        0 & 2 & 3 & 4
+        \end{bmatrix}\begin{bmatrix}
+        1\\
+        3\\
+        6\\
+        8\\
+        \end{bmatrix} = $\newline
+        $\frac{1}{35}\begin{bmatrix}
+        29 & 11 & 2 & -7\\
+        -9 & -1 & 3 & 7
+        \end{bmatrix}\begin{bmatrix}
+        1\\
+        3\\
+        6\\
+        8\\
+        \end{bmatrix} = \begin{bmatrix}
+        18/35\\
+        62/35
+        \end{bmatrix}$
+        \item See python code and resultant plot
+        \item See python code and resultant plot
+    \end{enumerate}
+\end{solution}
+\newpage
+
+
+
+\end{document}
+
